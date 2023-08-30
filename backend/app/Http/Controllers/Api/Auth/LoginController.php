@@ -4,40 +4,50 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
     public function __invoke(LoginRequest $request)
     {
         try {
-            // Validar los datos de entrada
+            // Validate input data
             $request->validate([
                 'email' => 'required|email',
                 'password' => 'required'
             ]);
 
-            // Buscar el usuario
+            // User search
             $user = User::query()->where('email', $request->email)->first();
 
-            // Verificar si el usuario existe y la contraseña es correcta
+            // Check if the user exists and the password is correct.
             if (!$user || !Hash::check($request->password, $user->password)) {
-                return response()->errorResponse('Credenciales no válidas', 401);
+                return response()->error('Credenciales no válidas', Response::HTTP_UNAUTHORIZED);
             }
 
-            // Revocar tokens anteriores
+            // Revoke previous tokens
             $user->tokens()->delete();
 
-            // Crear un nuevo token
+            // Create a new token
             $token = $user->createToken('app-token')->plainTextToken;
 
-            // Devolver el token en la respuesta
-            return response()->successResponse(['token' => $token], 'Inicio de sesión exitoso', 200);
+            // Return the token in the response
+            return response()->success(['token' => $token], 'Inicio de sesión exitoso', Response::HTTP_OK);
 
         } catch (\Exception $e) {
-            // Capturar cualquier excepción y devolver una respuesta de error
-            return response()->errorResponse('Error en el servidor', 500);
+            // Catch any exception and return an error response
+			$message = __(':class. :method: :message',
+				[
+					'class' => debug_backtrace()[0]['class'],
+					'method'   => debug_backtrace()[0]['function'],
+					'message'   => $e->getMessage()
+				]
+			);
+            Log::error($message);
+            return response()->error('Error en el servidor', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

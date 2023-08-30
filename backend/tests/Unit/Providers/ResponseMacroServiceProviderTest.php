@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Providers;
 
 use Tests\TestCase;
 use Illuminate\Support\Facades\Response;
@@ -10,7 +10,7 @@ class ResponseMacroServiceProviderTest extends TestCase
     /** @test */
     public function should_return_success_response(): void
     {
-        $response = Response::successResponse(['key' => 'value'], 'Successful operation', 200);
+        $response = Response::success(['key' => 'value'], 'Successful operation', 200);
 
         $this->assertEquals(200, $response->status());
         $this->assertEquals([
@@ -23,7 +23,7 @@ class ResponseMacroServiceProviderTest extends TestCase
     /** @test */
     public function should_return_error_response(): void
     {
-        $response = Response::errorResponse('Something went wrong', 500);
+        $response = Response::error('Something went wrong', 500);
 
         $this->assertEquals(500, $response->status());
         $this->assertEquals([

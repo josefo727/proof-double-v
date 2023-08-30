@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class CustomerStoreRequest extends FormRequest
+class CustomerStoreRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,12 +14,13 @@ class CustomerStoreRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
+     * @return array<string,array<int,string>>
      */
     public function rules(): array
     {
         return [
             'name' => ['required', 'max:100', 'string'],
-            'email' => ['required', 'email'],
+            'email' => ['required', 'email', 'unique:customers,email'],
             'phone' => ['required', 'max:20', 'string'],
         ];
     }
