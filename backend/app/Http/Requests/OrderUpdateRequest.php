@@ -21,9 +21,7 @@ class OrderUpdateRequest extends FormRequest
     {
         return [
             'total' => ['required', 'numeric'],
-            'status' => ['required', 'max:20', 'string'],
             'customer_id' => ['required', 'exists:customers,id'],
-            'user_id' => ['required', 'exists:users,id'],
         ];
     }
 }

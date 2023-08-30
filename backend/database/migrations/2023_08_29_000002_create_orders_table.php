@@ -16,7 +16,6 @@ return new class extends Migration {
             $table->string('status', 20);
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('user_id');
-
             $table->timestamps();
         });
     }

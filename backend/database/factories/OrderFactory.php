@@ -3,7 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Order;
-use Illuminate\Support\Str;
+use App\Services\OrderStatus;
+use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class OrderFactory extends Factory
@@ -24,7 +25,7 @@ class OrderFactory extends Factory
     {
         return [
             'total' => $this->faker->randomFloat(2, 0, 9999),
-            'status' => $this->faker->text(20),
+            'status' => Arr::random(OrderStatus::getAll()),
             'customer_id' => \App\Models\Customer::factory(),
             'user_id' => \App\Models\User::factory(),
         ];

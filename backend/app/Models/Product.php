@@ -15,6 +15,10 @@ class Product extends Model
 
     protected $searchableFields = ['*'];
 
+    protected $cast = [
+        'price' => 'float'
+    ];
+
     public function creator()
     {
         return $this->belongsTo(User::class, 'user_id');

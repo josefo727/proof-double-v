@@ -12,6 +12,9 @@ class OrderCollection extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+			'data' => OrderResource::collection($this->collection),
+			...(new PaginationResource($this))->toArray($request)
+        ];
     }
 }
