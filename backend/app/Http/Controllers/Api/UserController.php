@@ -3,31 +3,33 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use App\Http\Resources\UserResource;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\UserResource;
 use App\Http\Resources\UserCollection;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function index(Request $request): UserCollection
+    public function index(Request $request): JsonResponse
     {
         $this->authorize('view-any', User::class);
 
         $search = $request->get('search', '');
 
-        $users = User::search($search)
+        $users = User::query()
+            ->search($search)
             ->latest()
             ->paginate();
 
-        return new UserCollection($users);
+        return response()->success(UserCollection::make($users));
     }
 
-    public function store(UserStoreRequest $request): UserResource
+    public function store(UserStoreRequest $request): JsonResponse
     {
         $this->authorize('create', User::class);
 
@@ -35,19 +37,19 @@ class UserController extends Controller
 
         $validated['password'] = Hash::make($validated['password']);
 
-        $user = User::create($validated);
+        $user = User::query()->create($validated);
 
-        return new UserResource($user);
+        return response()->success(new UserResource($user), 'User created successfully', Response::HTTP_CREATED);
     }
 
-    public function show(Request $request, User $user): UserResource
+    public function show(Request $request, User $user): JsonResponse
     {
         $this->authorize('view', $user);
 
-        return new UserResource($user);
+        return response()->success(new UserResource($user));
     }
 
-    public function update(UserUpdateRequest $request, User $user): UserResource
+    public function update(UserUpdateRequest $request, User $user): JsonResponse
     {
         $this->authorize('update', $user);
 
@@ -61,15 +63,15 @@ class UserController extends Controller
 
         $user->update($validated);
 
-        return new UserResource($user);
+        return response()->success(new UserResource($user), 'User updated successfully', Response::HTTP_OK);
     }
 
-    public function destroy(Request $request, User $user): Response
+    public function destroy(Request $request, User $user): JsonResponse
     {
         $this->authorize('delete', $user);
 
         $user->delete();
 
-        return response()->noContent();
+        return response()->success(null, null, Response::HTTP_NO_CONTENT);
     }
 }

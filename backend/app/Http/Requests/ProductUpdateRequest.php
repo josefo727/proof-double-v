@@ -30,7 +30,7 @@ class ProductUpdateRequest extends FormRequest
             'name' => ['required', 'max:50', 'string'],
             'price' => ['required', 'numeric'],
             'quantity' => ['required', 'numeric'],
-            'user_id' => ['required', 'exists:users,id'],
         ];
     }
+
 }

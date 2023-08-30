@@ -12,6 +12,9 @@ class UserCollection extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+			'data' => UserResource::collection($this->collection),
+			...(new PaginationResource($this))->toArray($request)
+		];
     }
 }

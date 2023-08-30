@@ -2,10 +2,7 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Rule;
-use Illuminate\Foundation\Http\FormRequest;
-
-class ProductStoreRequest extends FormRequest
+class ProductStoreRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,6 +14,7 @@ class ProductStoreRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
+     * @return array<string,array<int,string>>
      */
     public function rules(): array
     {
@@ -27,5 +25,15 @@ class ProductStoreRequest extends FormRequest
             'quantity' => ['required', 'numeric'],
             'user_id' => ['required', 'exists:users,id'],
         ];
+    }
+
+    /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'user_id' => auth()->id(),
+        ]);
     }
 }
