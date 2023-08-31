@@ -2,21 +2,20 @@
 
 namespace App\Events;
 
+use App\Http\Resources\OrderResource;
+use App\Models\Order;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class OrderCreated
+class OrderCreated implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $order;
     public $message;
-    public $customer;
 
     /**
      * Create a new event instance.
@@ -24,26 +23,26 @@ class OrderCreated
     public function __construct(Order $order)
     {
         $this->order = $order;
-        $this->customer = $customer;
-        $this->message = "Se ha creado una nueva orden para el cliente {$customer->name}.";
+        $this->message = "Se ha creado una nueva orden para el cliente {$order->customer->name}.";
     }
 
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return array<int, \Illuminate\Broadcasting\Channel>
      */
-    public function broadcastOn(): array
+    public function broadcastOn(): Channel
     {
         return new Channel('orders');
     }
 
+    /**
+     * @return array<string,mixed>
+     */
     public function broadcastWith(): array
     {
         return [
-            'order' => $this->order,
+            'order' => new OrderResource($this->order),
             'message' => $this->message,
-            'customer' => $this->customer
         ];
     }
 }

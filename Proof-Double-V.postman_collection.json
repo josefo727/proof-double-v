@@ -1,0 +1,647 @@
+{
+	"info": {
+		"_postman_id": "cd198c1c-8d29-47f7-a5f1-671588f95b6d",
+		"name": "Proof Double V",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7402626"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get All Users",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{domain}}/api/users",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						},
+						"description": "Get paginated list of customers"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/users/1",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"1"
+							]
+						},
+						"description": "Get paginated list of customers"
+					},
+					"response": []
+				},
+				{
+					"name": "Store User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Andrés González\",\n    \"email\": \"andes.gonzales@email.com\",\n    \"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/api/users",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						},
+						"description": "Get paginated list of customers"
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Edit Andrés González\",\n    \"email\": \"edit.andes.gonzales@email.com\",\n    \"password\": \"password\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/api/users/17",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"17"
+							]
+						},
+						"description": "Get paginated list of customers"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/users/17",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"17"
+							]
+						},
+						"description": "Get paginated list of customers"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customers",
+			"item": [
+				{
+					"name": "Get All Costomers",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{domain}}/api/customers",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"customers"
+							]
+						},
+						"description": "Get paginated list of customers"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Customer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/customers/1",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"customers",
+								"1"
+							]
+						},
+						"description": "Get paginated list of customers"
+					},
+					"response": []
+				},
+				{
+					"name": "Store Customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Sierra Bosco\",\n    \"email\": \"vicenta68@damore.info\",\n    \"phone\": \"+1-657-479-3586\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/api/customers",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"customers"
+							]
+						},
+						"description": "Get paginated list of customers"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Customer",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Editado Bosco\",\n    \"email\": \"editado_vicenta68@damore.info\",\n    \"phone\": \"+1-657-479-3586\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/api/customers/11",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"customers",
+								"11"
+							]
+						},
+						"description": "Get paginated list of customers"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Customer",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/customers/11",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"customers",
+								"11"
+							]
+						},
+						"description": "Get paginated list of customers"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Get All Products",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{domain}}/api/products",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"products"
+							]
+						},
+						"description": "Get paginated list of customers"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/products/5",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"5"
+							]
+						},
+						"description": "Get paginated list of customers"
+					},
+					"response": []
+				},
+				{
+					"name": "Store Product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sku\": \"ABC-2548\",\n    \"name\": \"Nuevo Producto\",\n    \"price\": \"54.12\",\n    \"quantity\": 15\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/api/products",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"products"
+							]
+						},
+						"description": "Get paginated list of customers"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sku\": \"EDIT-2548\",\n    \"name\": \"Nuevo Producto editado\",\n    \"price\": \"54.12\",\n    \"quantity\": 15\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/api/products/6",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"6"
+							]
+						},
+						"description": "Get paginated list of customers"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Prodduct",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/customers/11",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"customers",
+								"11"
+							]
+						},
+						"description": "Get paginated list of customers"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Get All Orders",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{domain}}/api/products",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"products"
+							]
+						},
+						"description": "Get paginated list of customers"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/orders/5",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"5"
+							]
+						},
+						"description": "Get paginated list of customers"
+					},
+					"response": []
+				},
+				{
+					"name": "Store Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer_id\": 2,\n    \"items\": [\n        {\n            \"product_id\": 5,\n            \"quantity\": 20\n        },\n        {\n            \"product_id\": 2,\n            \"quantity\": 6\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/api/orders",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"orders"
+							]
+						},
+						"description": "Get paginated list of customers"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Order",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"distribution\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/api/orders/10",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"10"
+							]
+						},
+						"description": "Get paginated list of customers"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Order",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/api/orders/1",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"1"
+							]
+						},
+						"description": "Get paginated list of customers"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"if(!!jsonData?.data?.token) {",
+							"    pm.collectionVariables.set(\"token\", jsonData.data.token);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"admin@admin.com\",\n    \"password\": \"admin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain}}/api/login",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				},
+				"description": "Login and get token"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "domain",
+			"value": "http://localhost",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": ""
+		}
+	]
+}

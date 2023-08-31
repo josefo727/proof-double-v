@@ -41,4 +41,23 @@ class OrderStatusTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         new OrderStatus('invalid_status');
     }
+
+    /** @test */
+    public function should_return_correct_notification_for_each_status(): void
+    {
+        $statusCreated = new OrderStatus(OrderStatus::CREATED);
+        $this->assertEquals('La orden ha sido creada', $statusCreated->getNotification());
+
+        $statusAccepted = new OrderStatus(OrderStatus::ACCEPTED);
+        $this->assertEquals('La orden ha sido aceptada', $statusAccepted->getNotification());
+
+        $statusDistribution = new OrderStatus(OrderStatus::DISTRIBUTION);
+        $this->assertEquals('La orden está en reparto', $statusDistribution->getNotification());
+
+        $statusDelivered = new OrderStatus(OrderStatus::DELIVERED);
+        $this->assertEquals('La orden ha sido entregada', $statusDelivered->getNotification());
+
+        $statusCancelled = new OrderStatus(OrderStatus::CANCELLED);
+        $this->assertEquals('La orden ha sido cancelada', $statusCancelled->getNotification());
+    }
 }

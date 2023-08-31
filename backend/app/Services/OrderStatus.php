@@ -19,7 +19,9 @@ class OrderStatus
         }
         $this->name = $name;
     }
-
+    /**
+     * @return array<int,string>
+     */
     public static function getAll(): array
     {
         return [
@@ -41,7 +43,9 @@ class OrderStatus
             self::CANCELLED,
         ]);
     }
-
+    /**
+     * @return array<string,array<int,string>>
+     */
     public static function getTransitions(): array
     {
         return [
@@ -59,7 +63,9 @@ class OrderStatus
             ->values()
             ->toArray();
     }
-
+    /**
+     * @return array<string,string>
+     */
     public static function getLabels(): array
     {
         return [
@@ -87,5 +93,16 @@ class OrderStatus
     public function is(string $name): bool
     {
         return $this->name === $name;
+    }
+
+    public function getNotification(): string
+    {
+        return match($this->name) {
+            self::CREATED => 'La orden ha sido creada',
+            self::ACCEPTED => 'La orden ha sido aceptada',
+            self::DISTRIBUTION => 'La orden está en reparto',
+            self::DELIVERED => 'La orden ha sido entregada',
+            self::CANCELLED => 'La orden ha sido cancelada',
+        };
     }
 }

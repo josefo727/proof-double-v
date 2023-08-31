@@ -1,66 +1,106 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Backend Laravel Project README
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Overview
 
-## About Laravel
+Este proyecto de backend Laravel está diseñado para abordar la lógica de negocio, la autenticación y las notificaciones en tiempo real en un sistema de gestión de pedidos. El código sigue los principios SOLID y emplea diversos patrones de diseño para garantizar que sea limpio, mantenible y extensible. En las secciones siguientes, se destacan las características y componentes más relevantes del proyecto, aunque no es una lista exhaustiva debido a limitaciones de espacio.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Events
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- `OrderCreated.php`: Notifica la creación de una nueva orden. (Patrón Observer)
+- `OrderStatusChanged.php`: Notifica cualquier cambio en el estado de una orden. (Patrón Observer)
 
-## Learning Laravel
+### Exceptions
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- `Handler.php`: Manejo global de excepciones para respuestas JSON en caso de errores. (Principio de Sustitución de Liskov)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Http
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+#### Controllers
 
-## Laravel Sponsors
+- `LoginController.php`: Maneja la lógica de autenticación y generación de tokens. (Principio de Responsabilidad Única)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+#### Requests
 
-### Premium Partners
+- `BaseFormRequest.php`: Modifica la respuesta de errores de validación para incluirla en la respuesta JSON. (Principio de Abierto/Cerrado)
+- Todos los demás `*Request.php`: Validan el cuerpo de las peticiones API. (Principio de Responsabilidad Única)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+#### Resources
 
-## Contributing
+- `*Collection.php` y `*Resource.php`: Formatean las respuestas de los recursos. (Principio de Responsabilidad Única)
+- `PaginationResource.php`: Controla la paginación de las llamadas API para listados de registros. (Principio de Responsabilidad Única)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Observers
 
-## Code of Conduct
+- `OrderObserver.php`: Dispara los eventos `OrderCreated` y `OrderStatusChanged`, y libera el inventario al cancelar una orden. (Patrón Observer)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Providers
 
-## Security Vulnerabilities
+- `ResponseMacroServiceProvider.php`: Encapsula la lógica de respuestas de éxito y error para las llamadas API y estandariza el formato de respuesta. (Principio de Inversión de Dependencia)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Rules
 
-## License
+- `QuantityAvailable.php`: Regla personalizada para evitar la creación de pedidos con demanda mayor al stock disponible. (Principio de Sustitución de Liskov)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Services
+
+- `OrderStatus.php`: Asigna y controla los estados de una orden y el flujo de las transiciones. (Principio de Responsabilidad Única)
+
+## Tests
+
+El proyecto cuenta con 41 pruebas unitarias que respaldan todas las funcionalidades del sistema.
+
+![Batería de Tests](/public/unit-test.png)
+
+## Levantar el Proyecto con Laravel Sail
+
+### Requisitos Previos
+
+- Docker
+- Credenciales de Pusher para notificaciones en tiempo real
+
+### Pasos para la Instalación
+
+1. **Clonar el Repositorio**: 
+    ```bash
+    git clone git@github.com:josefo727/proof-double-v.git
+    ```
+
+2. **Ir al Directorio del Proyecto**:
+    ```bash
+    cd proof-double-v/backend
+    ```
+
+3. **Copiar el Archivo `.env.example` a `.env`**:
+    ```bash
+    cp .env.example .env
+    ```
+
+4. **Configurar las Credenciales de Pusher en `.env`**:
+    ```env
+    PUSHER_APP_ID=<TU_APP_ID>
+    PUSHER_APP_KEY=<TU_APP_KEY>
+    PUSHER_APP_SECRET=<TU_APP_SECRET>
+    PUSHER_APP_CLUSTER=<TU_APP_CLUSTER>
+    ```
+
+5. **Levantar los Contenedores de Docker con Laravel Sail**:
+    ```bash
+    ./vendor/bin/sail up
+    ```
+
+    O si prefieres usar Docker directamente:
+    ```bash
+    docker-compose up -d
+    ```
+
+6. **Ejecutar las Migraciones y Seeders**:
+    ```bash
+    ./vendor/bin/sail artisan migrate --seed
+    ```
+
+### Notas Importantes
+
+- Las credenciales de Pusher son obligatorias para el funcionamiento de las notificaciones en tiempo real en este proyecto. Asegúrate de configurarlas correctamente en el archivo `.env`.
+
