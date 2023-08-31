@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Rules\QuantityAvailable;
-use Illuminate\Validation\Rule;
+use Illuminate\Validation\Validator;
 
 class OrderStoreRequest extends BaseFormRequest
 {
@@ -17,7 +17,7 @@ class OrderStoreRequest extends BaseFormRequest
      */
     public function rules(): array
     {
-        $rules = [
+        return [
             'customer_id' => ['required', 'exists:customers,id'],
             'items' => ['required', 'array'],
             'items.*.product_id' => [
@@ -37,18 +37,17 @@ class OrderStoreRequest extends BaseFormRequest
                 },
             ],
         ];
+    }
 
-        // Validate that there are no duplicate product_id's.
-        $items = $this->input('items', []);
-        $productIds = array_column($items, 'product_id');
-        if (count(array_unique($productIds)) < count($productIds)) {
-            $rules[] = [
-                'items.*.product_id' => Rule::unique()->where(function ($query) {
-                    return $query->whereIn('product_id', $this->input('items.*.product_id', []));
-                }),
-            ];
-        }
+    public function withValidator(Validator $validator): void
+    {
+        $validator->after(function ($validator) {
+            $items = $this->input('items', []);
+            $productIds = array_column($items, 'product_id');
 
-        return $rules;
+            if (count(array_unique($productIds)) < count($productIds)) {
+                $validator->errors()->add('items.*.product_id', 'El id del producto debe ser único dentro del array items');
+            }
+        });
     }
 }

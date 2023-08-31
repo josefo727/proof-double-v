@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Order;
 use App\Models\Product;
+use App\Services\OrderStatus;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -96,17 +97,22 @@ class OrderController extends Controller
 
         $validated = $request->validated();
 
-        $order->update($validated);
+        $order->changeStatus($validated['status']);
 
-        return response()->success(new OrderResource($order), 'Order updated successfully', Response::HTTP_OK);
+        return response()->success(new OrderResource($order), 'Estado de la orden actualizado', Response::HTTP_OK);
     }
 
     public function destroy(Request $request, Order $order): JsonResponse
     {
         $this->authorize('delete', $order);
 
+        if ($order->status !== OrderStatus::CANCELLED) {
+            return response()->error('No se puede eliminar una orden que no ha sido cancelada', Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
         $order->delete();
 
         return response()->success(null, null, Response::HTTP_NO_CONTENT);
     }
+
 }

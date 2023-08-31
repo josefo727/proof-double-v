@@ -6,6 +6,8 @@ use App\Models\Scopes\Searchable;
 use App\Services\OrderStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Order extends Model
 {
@@ -20,43 +22,58 @@ class Order extends Model
         'state'
     ];
 
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
         static::creating(function ($order) {
             $order->status = OrderStatus::CREATED;
-            if(!app()->runningInConsole()) {
-                $order->total = 0;
-            }
+            $order->total = 0;
         });
     }
 
-    public function customer()
+    /**
+     * @return BelongsTo
+     */
+    public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
     }
 
-    public function creator()
+    /**
+     * @return BelongsTo
+     */
+    public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function products()
+    /**
+     * @return BelongsToMany
+     */
+    public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class)
             ->withPivot('quantity', 'price', 'subtotal');
     }
 
-    public function changeStatus($newStatus)
+    /**
+     * @return void
+     * @param mixed $newStatus
+     */
+    public function changeStatus($newStatus): void
     {
-        if ($this->state->canChangeStatus($newStatus)) {
-            $this->status = $newStatus;
-            $this->save();
+        if (!$this->state->canChangeStatus($newStatus)) {
+            throw new \Exception('Estado de transición no válido');
         }
+        $this->status = $newStatus;
+        $this->save();
     }
 
-    public function getStateAttribute()
+    /**
+     * @return OrderStatus
+     */
+    public function getStateAttribute(): OrderStatus
     {
         return new OrderStatus($this->status);
     }

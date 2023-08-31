@@ -36,6 +36,10 @@ class Handler extends ExceptionHandler
             return response()->error('Registro no encontrado', Response::HTTP_NOT_FOUND);
         }
 
+        if ($exception instanceof \Exception) {
+            return response()->error($exception->getMessage(), Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
         if ($request->is('api/*')) {
             $statusCode = method_exists($exception, 'getStatusCode') ? $exception->getStatusCode() : Response::HTTP_INTERNAL_SERVER_ERROR;
             $code = $exception->getCode();

@@ -22,14 +22,16 @@ class OrderTest extends TestCase
         $this->assertEquals(OrderStatus::ACCEPTED, $order->fresh()->status);
     }
 
+
     /** @test */
     public function should_not_change_to_invalid_status(): void
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Estado de transición no válido');
+
         $order = Order::factory()->create(['status' => OrderStatus::CREATED]);
 
         $newStatus = OrderStatus::DELIVERED;
         $order->changeStatus($newStatus);
-
-        $this->assertEquals(OrderStatus::CREATED, $order->fresh()->status);
     }
 }

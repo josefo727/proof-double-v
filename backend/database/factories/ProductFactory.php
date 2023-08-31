@@ -23,8 +23,8 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'sku' => $this->faker->unique->text(50),
-            'name' => $this->faker->name(),
+            'sku' => Str::upper(Str::random(10)),
+            'name' => $this->faker->sentence(2),
             'price' => $this->faker->randomFloat(2, 0, 9999),
             'quantity' => $this->faker->randomNumber(),
             'user_id' => \App\Models\User::factory(),

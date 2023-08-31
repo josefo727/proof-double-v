@@ -51,6 +51,15 @@ class OrderStatus
         ];
     }
 
+    public static function getAcceptedValuesForTransaction()
+    {
+        return collect(array_values(OrderStatus::getTransitions()))
+            ->collapse()
+            ->unique()
+            ->values()
+            ->toArray();
+    }
+
     public static function getLabels(): array
     {
         return [
@@ -70,7 +79,9 @@ class OrderStatus
 
     public function canChangeStatus(string $newName): bool
     {
-        return in_array($newName, self::getTransitions()[$this->name]);
+        $allowedTransitions = self::getTransitions()[$this->name] ?? [];
+
+        return in_array($newName, $allowedTransitions);
     }
 
     public function is(string $name): bool
