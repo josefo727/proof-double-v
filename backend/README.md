@@ -51,7 +51,7 @@ Este proyecto de backend Laravel está diseñado para abordar la lógica de nego
 
 El proyecto cuenta con 41 pruebas unitarias que respaldan todas las funcionalidades del sistema.
 
-![Batería de Tests](/public/unit-test.png)
+![Batería de Tests](/backend/public/unit-test.png)
 
 ## Levantar el Proyecto con Laravel Sail
 
