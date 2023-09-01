@@ -22,7 +22,7 @@ const connectDB = async () => {
     console.error('Could not connect to MongoDB', error);
     process.exit(1);
   } finally {
-    // Si deseas cerrar la conexión después de confirmar que todo funciona, descomenta la siguiente línea
+    // Uncomment the following line to close the connection after confirming that everything is working
     // await client.close();
   }
 };

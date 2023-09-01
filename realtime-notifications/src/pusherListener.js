@@ -4,7 +4,7 @@ const { client, connectDB } = require('./config/db');
 
 dotenv.config();
 
-// Conectar a MongoDB
+// Connect to MongoDB
 connectDB();
 
 const pusher = new Pusher(process.env.PUSHER_APP_KEY, {
